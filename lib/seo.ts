@@ -36,7 +36,7 @@ export const siteConfig = {
     "SEO",
     "Creative Strategy",
   ],
-  url: process.env.NEXT_PUBLIC_SITE_URL || \"https://orbit-click-media.vercel.app\",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://orbit-click-media.vercel.app",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@orbitclickmedia.com",
   contactPhone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "",
   social: {
