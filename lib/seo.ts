@@ -7,10 +7,10 @@ export const siteConfig = {
   city: "Hyderabad",
   country: "India",
   locale: "en_IN",
-  defaultTitle: "OrbitClick Media | AI Creative & Performance Marketing Agency",
+  defaultTitle: "AI Creative & Performance Marketing Agency Hyderabad | OrbitClick Media",
   titleTemplate: "%s | OrbitClick Media",
   description:
-    "OrbitClick Media is a premium AI-powered creative and performance marketing agency specializing in cinematic content, motion graphics, AI video production, branding, Meta Ads, Google Ads, and modern web experiences.",
+    "OrbitClick Media is a Hyderabad-based AI creative and performance marketing agency specializing in Meta Ads, Google Ads, AI video production, branding, SEO, and web development.",
   keywords: [
     "OrbitClick Media",
     "OrbitClick",

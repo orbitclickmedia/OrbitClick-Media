@@ -1,12 +1,23 @@
 import { SiteEffects } from "@/components/site-effects";
-import { createMetadata, siteConfig } from "@/lib/seo";
+import { CaseStudyCard } from "@/components/CaseStudyCard";
+import { CalendarEmbed } from "@/components/CalendarEmbed";
+import { PricingCard } from "@/components/PricingCard";
+import { StatsPanel } from "@/components/StatsPanel";
+import { TestimonialCard } from "@/components/TestimonialCard";
+import { caseStudies } from "@/lib/case-studies";
+import { pricingPlans } from "@/lib/pricing";
+import { siteConfig } from "@/lib/seo";
+import { testimonials } from "@/lib/testimonials";
 
 export function generateMetadata() {
-  return createMetadata({
+  return {
+    metadataBase: new URL(siteConfig.url),
     title: siteConfig.defaultTitle,
     description: siteConfig.description,
-    path: "/",
-  });
+    alternates: {
+      canonical: siteConfig.url,
+    },
+  };
 }
 
 const services = [
@@ -17,13 +28,7 @@ const services = [
   { n: "05", title: "SEO & Content", desc: "Technical SEO, local SEO, topical authority, landing pages, and content systems built to rank for commercial and branded search demand.", tag: "Organic" },
   { n: "06", title: "Brand Identity", desc: "Premium visual systems for sharper market perception: positioning, marks, palettes, typography, messaging, and brand usage architecture.", tag: "Brand" },
   { n: "07", title: "Web Design & Development", desc: "Fast, crawlable, conversion-focused websites with modern UX, strong Core Web Vitals, and a brand experience that feels unmistakably premium.", tag: "Tech" },
-  { n: "08", title: "Creative Strategy", desc: "Audience research, content strategy, AI workflows, offer positioning, and creative operating systems that compress production cycles.", tag: "Strategy" },
-];
-
-const works = [
-  { title: "NexGen Fintech", cat: "AI Video + Identity", result: "+340% Brand Recall", bg: "linear-gradient(135deg,#050d1a,#0c2244,#050d1a)", wide: true },
-  { title: "StyleVault D2C", cat: "Meta Ads + Creative", result: "4.6× ROAS", bg: "linear-gradient(135deg,#0a0515,#1a0a30,#0a0515)", wide: false },
-  { title: "OrbitEd Technologies", cat: "Motion + Web", result: "1.8M Views", bg: "linear-gradient(135deg,#020d12,#041e26,#020d12)", wide: false },
+  { n: "08", title: "Creative Strategy", desc: "Audience research, content strategy, AI workflows, offer positioning, and creative operating systems that compress ideation cycles.", tag: "Strategy" },
 ];
 
 const comparisons = [
@@ -41,12 +46,6 @@ const steps = [
   { n: "03", title: "Production", desc: "Motion, video, copy, web, SEO, and identity are built inside one unified brand and performance language." },
   { n: "04", title: "Optimization", desc: "Live A/B testing, search data, paid media dashboards, and conversion signals guide rapid improvement." },
   { n: "05", title: "Scaling", desc: "Winning creative and landing pages get amplified through budget allocation, platform expansion, and compounding organic growth." },
-];
-
-const testimonials = [
-  { q: "OrbitClick completely transformed how we present our brand. The AI-powered video they produced for our launch got 1.8 million views organically. I didn't think that was possible without a Netflix budget.", name: "Rahul Krishnamurthy", role: "Founder, NexGen Fintech", init: "RK" },
-  { q: "Our Meta ad ROAS went from 1.4× to 4.6× in just two months. They understand both creative and data — which is extremely rare. The team moves fast and delivers premium quality every time.", name: "Priya Shetty", role: "CMO, StyleVault D2C", init: "PS" },
-  { q: "The branding and website they built for us looks like a ₹50 lakh agency deliverable. The motion graphics alone set us apart from every competitor in our space. Worth every rupee and more.", name: "Arjun Mehta", role: "CEO, OrbitEd Technologies", init: "AM" },
 ];
 
 const faqs = [
@@ -72,10 +71,11 @@ export default function HomePage() {
           <a href="#seo">SEO</a>
           <a href="#work">Work</a>
           <a href="#process">Process</a>
+          <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
         </div>
         <div className="nav-cta-group">
-          <a className="nav-cta" href="https://calendly.com/orbitclickmedia">Book a Call</a>
+          <a className="nav-cta" href="#book">Book a Call</a>
           <a className="nav-whatsapp" href="https://wa.me/919515445781?text=Hi%20OrbitClick%2C%20I%27d%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
         </div>
       </nav>
@@ -99,14 +99,16 @@ export default function HomePage() {
                 OrbitClick Media is a premium AI-powered creative and performance marketing agency in Hyderabad, India, helping brands grow through cinematic AI video production, motion graphics, branding, SEO, Meta Ads, Google Ads, and high-converting web experiences.
               </p>
               <div className="hero-actions">
-                <a className="btn-primary" href="https://calendly.com/orbitclickmedia">Book a Strategy Call</a>
+                <a className="btn-primary" href="#book">Book a Strategy Call</a>
                 <a className="btn-ghost" href="#work">View Case Studies</a>
               </div>
-              <dl className="hero-stats" aria-label="OrbitClick Media performance highlights">
-                <div><dt className="stat-val">50+</dt><dd className="stat-label">Brands</dd></div>
-                <div><dt className="stat-val">3.8×</dt><dd className="stat-label">Avg ROAS</dd></div>
-                <div><dt className="stat-val">450M+</dt><dd className="stat-label">Impressions</dd></div>
-              </dl>
+              <StatsPanel
+                stats={[
+                  { value: "150+", label: "Brands" },
+                  { value: "8×", label: "Avg ROAS" },
+                  { value: "$24M+", label: "Revenue" },
+                ]}
+              />
             </div>
             <div className="hero-visual" aria-hidden="true">
               <div className="orb-scene">
@@ -121,6 +123,17 @@ export default function HomePage() {
             </div>
           </div>
           <div className="scroll-cue" aria-hidden="true"><span /></div>
+        </section>
+
+        <section id="book" aria-labelledby="book-title">
+          <div className="section-inner">
+            <div className="book-header">
+              <p className="section-tag rv">Start Here</p>
+              <h2 id="book-title" className="section-title rv d1">Book your strategy session.<br /><em>See the growth opportunity.</em></h2>
+              <p className="section-body rv d2">Choose a time that works for you and let’s map the creative, search, and paid growth plan for your next launch.</p>
+            </div>
+            <CalendarEmbed />
+          </div>
         </section>
 
         <section id="services" aria-labelledby="services-title">
@@ -138,7 +151,7 @@ export default function HomePage() {
                   <div className="svc-top"><span className="svc-num">{service.n}</span><span className="svc-tag">{service.tag}</span></div>
                   <h3 className="svc-title">{service.title}</h3>
                   <p className="svc-desc">{service.desc}</p>
-                  <a className="svc-arrow" href="https://calendly.com/orbitclickmedia">Explore <span aria-hidden="true">→</span></a>
+                  <a className="svc-arrow" href="#book">Explore <span aria-hidden="true">→</span></a>
                 </article>
               ))}
             </div>
@@ -148,7 +161,7 @@ export default function HomePage() {
         <section id="pricing-signal" className="pricing-signal">
           <div className="section-inner">
             <p className="pricing-text">Retainer packages from ₹50,000/month · Project work from ₹1,00,000 · Custom enterprise pricing available</p>
-            <a className="pricing-cta" href="https://calendly.com/orbitclickmedia">Get a free quote →</a>
+            <a className="pricing-cta" href="#book">Get a free quote →</a>
           </div>
         </section>
 
@@ -159,11 +172,15 @@ export default function HomePage() {
               <h2 id="seo-title" className="section-title rv d1">Rank with intent.<br /><em>Convert with content.</em></h2>
               <p className="section-body rv d2">OrbitClick Media builds SEO like a performance engine: technical foundations, branded search authority, Hyderabad local SEO, commercial keyword strategy, AI-search-friendly content, and conversion-focused pages that keep compounding after ads stop running.</p>
               <div className="seo-grid rv d3">
-                {["Technical SEO", "Keyword Strategy", "Content Authority", "Local Visibility"].map((title, index) => (
-                  <article className="seo-card" key={title}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <h3>{title}</h3>
-                    <p>{index === 0 ? "Speed, structure, crawlability, schema, indexing, and search-friendly architecture." : index === 1 ? "Commercial intent mapping for high-value services, local searches, and buyer journeys." : index === 2 ? "Topic clusters, landing pages, entity signals, FAQs, and brand-led content designed to earn trust." : "Google Business Profile readiness, location signals, local keywords, and city-based search growth."}</p>
+                {[
+                  "Technical SEO architecture and crawl-ready page structure",
+                  "Keyword intent mapping that matches commercial demand",
+                  "Search-friendly content systems for brands and local audiences",
+                  "Conversion-first page design and schema-driven signals",
+                ].map((item) => (
+                  <article className="seo-card" key={item}>
+                    <span>•</span>
+                    <h3>{item}</h3>
                   </article>
                 ))}
               </div>
@@ -173,22 +190,15 @@ export default function HomePage() {
                 <div className="seo-orbit" aria-hidden="true"><strong>SEO</strong></div>
                 <div className="seo-score-copy">
                   <h3>Organic visibility engineered for premium brands.</h3>
-                  <p>We connect search demand to landing pages, creative content, technical health, and measurable business outcomes.</p>
+                  <p>We deliver the technical foundations, content systems, and audience-first optimization that make creative campaigns easier to scale.</p>
                 </div>
               </div>
-              <div className="seo-bars" aria-label="SEO readiness metrics">
-                {[
-                  ["Technical Health", "96%"],
-                  ["Content Depth", "88%"],
-                  ["Search Intent Fit", "92%"],
-                  ["Conversion Readiness", "84%"],
-                ].map(([label, value]) => (
-                  <div className="seo-bar-row" key={label}>
-                    <div className="seo-bar-top"><span>{label}</span><span>{value}</span></div>
-                    <div className="seo-bar"><span style={{ width: value }} /></div>
-                  </div>
-                ))}
-              </div>
+              <ul className="seo-checklist">
+                <li>SEO audit and technical fixes for faster crawlability</li>
+                <li>Commercial keyword strategy and landing page mapping</li>
+                <li>Schema, local signals, and branded search authority</li>
+                <li>Content systems designed for conversion and discovery</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -200,18 +210,11 @@ export default function HomePage() {
                 <p className="section-tag rv">Featured Work</p>
                 <h2 id="work-title" className="section-title rv d1">Creative outcomes that<br /><em>define categories.</em></h2>
               </div>
-              <a className="btn-ghost rv d2" href="https://calendly.com/orbitclickmedia">All Case Studies</a>
+              <a className="btn-ghost rv d2" href="/work">All Case Studies</a>
             </div>
             <div className="work-grid">
-              {works.map((work, index) => (
-                <article className={`work-card rv d${index + 1}${work.wide ? " wide" : ""}`} key={work.title}>
-                  <div className="work-bg">
-                    <div className="work-bg-inner" style={{ background: work.bg }}><div className="work-orb-wrap"><div className="work-orb" /></div></div>
-                    <div className="work-badge">{work.cat}</div>
-                    <div className="work-overlay"><div><p className="work-overlay-cat">{work.cat}</p><h3 className="work-overlay-title">{work.title}</h3><p className="work-overlay-result">↑ {work.result}</p></div></div>
-                  </div>
-                  <div className="work-footer"><h3 className="work-footer-title">{work.title}</h3><span className="work-footer-result">↑ {work.result}</span></div>
-                </article>
+              {caseStudies.slice(0, 3).map((caseStudy) => (
+                <CaseStudyCard key={caseStudy.slug} {...caseStudy} />
               ))}
             </div>
           </div>
@@ -237,7 +240,7 @@ export default function HomePage() {
                 <p className="section-tag rv">Process</p>
                 <h2 id="process-title" className="section-title rv d1">Five phases.<br /><em>One</em> outcome.</h2>
                 <p className="section-body rv d2 process-copy">A battle-tested operating system that moves from discovery to measurable scale without sacrificing quality.</p>
-                <a className="btn-primary rv d3" href="https://calendly.com/orbitclickmedia">Start Your Project</a>
+                <a className="btn-primary rv d3" href="#book">Start Your Project</a>
               </div>
               <div className="steps-wrap">
                 <div className="steps-line" aria-hidden="true" />
@@ -248,6 +251,23 @@ export default function HomePage() {
                   </article>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" aria-labelledby="pricing-title">
+          <div className="section-inner">
+            <div className="services-header">
+              <div>
+                <p className="section-tag rv">Pricing</p>
+                <h2 id="pricing-title" className="section-title rv d1">Transparent packages for every growth stage.</h2>
+              </div>
+              <p className="section-body rv d2">Simple, tiered offerings designed to help new brands launch, growth teams scale, and enterprise brands run high-performance campaigns.</p>
+            </div>
+            <div className="pricing-grid">
+              {pricingPlans.map((plan) => (
+                <PricingCard key={plan.tier} {...plan} />
+              ))}
             </div>
           </div>
         </section>
@@ -281,11 +301,7 @@ export default function HomePage() {
             </div>
             <div className="testi-grid">
               {testimonials.map((testimonial, index) => (
-                <figure className={`tcard rv d${index + 1}`} key={testimonial.name}>
-                  <div className="tcard-stars" aria-label="5 out of 5 stars"><span>★★★★★</span></div>
-                  <blockquote className="tcard-quote">"{testimonial.q}"</blockquote>
-                  <figcaption className="tcard-author"><div className="tcard-avatar">{testimonial.init}</div><div><div className="tcard-name">{testimonial.name}</div><div className="tcard-role">{testimonial.role}</div></div></figcaption>
-                </figure>
+                <TestimonialCard key={`${testimonial.name}-${index}`} {...testimonial} />
               ))}
             </div>
           </div>
@@ -314,7 +330,7 @@ export default function HomePage() {
             <h2 id="cta-title" className="cta-title rv d1">Build a brand that<br /><em>looks future-ready.</em></h2>
             <p className="cta-body rv d2">Book a complimentary 30-minute strategy session. We will show you where your biggest growth levers are and how OrbitClick Media can help you pull them.</p>
             <div className="cta-actions rv d3">
-              <a className="btn-primary cta-button" href="https://calendly.com/orbitclickmedia">Book a Strategy Call</a>
+              <a className="btn-primary cta-button" href="#book">Book a Strategy Call</a>
               <a className="btn-ghost cta-button" href="#work">View Case Studies</a>
             </div>
             <p className="cta-note rv d4">No commitment · Response within 2 hours · Complimentary audit included</p>
@@ -332,7 +348,7 @@ export default function HomePage() {
           <div className="footer-links">
             <a href="#services">Services</a>
             <a href="#faq">FAQ</a>
-            <span>{siteConfig.contactEmail}</span>
+            <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
           </div>
         </div>
       </footer>
