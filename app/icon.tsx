@@ -22,7 +22,7 @@ export default function Icon() {
             width: 320,
             height: 320,
             borderRadius: 320,
-            background: "conic-gradient(from 180deg,#4fa3ff,#00e5ff,#a855f7,#4fa3ff)",
+            background: "linear-gradient(135deg,#4fa3ff,#00e5ff)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
