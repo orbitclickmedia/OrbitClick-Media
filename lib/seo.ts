@@ -38,7 +38,10 @@ export const siteConfig = {
   ],
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://orbit-click-media.vercel.app",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@orbitclickmedia.com",
-  contactPhone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "",
+  contactPhone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+91 95154 45781",
+  whatsappUrl:
+    process.env.NEXT_PUBLIC_WHATSAPP_URL ||
+    "https://wa.me/919515445781?text=Hi%20OrbitClick%20Media%2C%20I%27d%20like%20to%20discuss%20a%20growth%20project",
   social: {
     instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/orbitclickmedia",
     linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://www.linkedin.com/company/orbitclick-media",

@@ -1,4 +1,5 @@
 import { absoluteUrl, siteConfig } from "./seo";
+import type { BlogPost, Service } from "./content";
 
 const socialLinks = Object.values(siteConfig.social).filter(Boolean);
 
@@ -112,5 +113,89 @@ export function organizationSchema(): Record<string, unknown> {
         ],
       },
     ],
+  };
+}
+
+export function breadcrumbSchema(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+export function faqSchema(faqs: [string, string][]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map(([question, answer]) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: answer,
+      },
+    })),
+  };
+}
+
+export function serviceSchema(service: Service) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${absoluteUrl(`/services/${service.slug}`)}#service`,
+    name: `${service.shortTitle} by ${siteConfig.name}`,
+    serviceType: service.shortTitle,
+    description: service.description,
+    provider: {
+      "@type": "LocalBusiness",
+      "@id": `${absoluteUrl()}#organization`,
+      name: siteConfig.name,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Hyderabad",
+        addressRegion: "Telangana",
+        addressCountry: "IN",
+      },
+    },
+    areaServed: [
+      { "@type": "City", name: "Hyderabad" },
+      { "@type": "State", name: "Telangana" },
+      { "@type": "Country", name: "India" },
+    ],
+    keywords: service.keyword,
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      url: absoluteUrl(`/services/${service.slug}`),
+      priceCurrency: "INR",
+    },
+  };
+}
+
+export function articleSchema(post: BlogPost) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    author: {
+      "@type": "Person",
+      name: siteConfig.founder,
+    },
+    publisher: {
+      "@id": `${absoluteUrl()}#organization`,
+    },
+    image: absoluteUrl("/opengraph-image"),
+    keywords: post.keywords.join(", "),
+    inLanguage: "en-IN",
   };
 }
