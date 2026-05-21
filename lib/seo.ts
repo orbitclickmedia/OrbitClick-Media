@@ -125,7 +125,7 @@ export function createMetadata({
     },
     manifest: "/manifest.webmanifest",
     other: {
-      "google-site-verification": "cr29Lip1JH5PriIewXe-ZU971Vha1ltlEGFRiHzBNvw",
+      "google-site-verification": "qRuaCVET8DKjuBWLdDhzigxU69j_Zo_hl8h8F-M5B0o",
       "geo.region": "IN-TG",
       "geo.placename": "Hyderabad",
       "ICBM": "17.3850, 78.4867",
